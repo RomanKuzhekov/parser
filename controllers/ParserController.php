@@ -18,6 +18,7 @@ final class ParserController extends Controller
 {
     private $url;
     public $config;
+    private $count = 0;
 
     /**
      * ParserController constructor.
@@ -26,6 +27,7 @@ final class ParserController extends Controller
     {
         $this->config = require "config/config.php";
         $this->url = $this->config[url];
+
 
         if(empty($this->url)){
             throw new \Exception("Адрес сайта пустой.");
@@ -72,7 +74,33 @@ final class ParserController extends Controller
 
     public function parseProducts($categories)
     {
+       // $categories->url = 'https://av.ru//g/00004330';
+        var_dump($categories);
+        $xpath = $this->getPage($categories->url);
 
+        // выбираем блоки с товарами <div class="b-grid__item">...
+        $nav = $xpath->query("//div[@class='b-grid__item']");
+
+        //если не находит товары - выбираем заново рандомную категорию и парсим её
+        if ($nav->length == 0){
+            $category = \Models\Category::getRandomCategory();
+            self::parseProducts($category);
+            exit();
+        }
+
+        /** @var \DOMElement $item */
+        foreach ($nav as $item){
+            if($this->count < $this->config['countPars']){
+                $link = $xpath->query(".//div/a[@class='b-product__title js-list-prod-open']", $item)->item(0);
+
+                $this->count++;
+                var_dump($link);
+            }
+
+        }
+
+      //  var_dump($nav);
     }
+
 
 }

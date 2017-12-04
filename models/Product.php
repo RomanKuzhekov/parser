@@ -23,6 +23,23 @@ use services\Db;
  */
 final class Product extends Model
 {
+    protected static $table = 'products';
+    protected static $fields = [
+        'id',
+        'category_id',
+        'title',
+        'url',
+        'price',
+        'img'
+    ];
 
+
+    public static function getProductsByCategory($category){
+        // $category->category_id = 265;
+        $query = Db::getInstance()->db()->prepare('SELECT * FROM ' . static::$table . ' WHERE category_id = :category_id');
+        $query->bindValue(":category_id", $category->category_id);
+        $query->execute();
+        return $query->fetchAll(Db::FETCH_CLASS, self::class);
+    }
 
 }

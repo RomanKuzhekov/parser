@@ -19,4 +19,10 @@ abstract class Controller
         return new \DOMXPath($dom);
     }
 
+    public function prepareVar($var){
+        if($var == false || $var == '' || $var == ' '){
+            $var = 'Нет значения';
+        }
+        return trim(strip_tags($var));
+    }
 }

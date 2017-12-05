@@ -16,7 +16,7 @@ return [
         'database' => 'parser',
         'charset' => 'UTF8'
     ],
-    'countPars' => 3
+    'countPars' => 10
 ];
 
 

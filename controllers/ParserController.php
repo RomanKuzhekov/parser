@@ -8,6 +8,7 @@
 
 namespace controllers;
 use models\Category;
+use models\Product;
 
 
 /**
@@ -26,7 +27,7 @@ final class ParserController extends Controller
     public function __construct()
     {
         $this->config = require "config/config.php";
-        $this->url = $this->config[url];
+        $this->url = $this->config['url'];
 
 
         if(empty($this->url)){
@@ -58,8 +59,8 @@ final class ParserController extends Controller
                 $href = $this->url . $href;
                 if($link->textContent !== ''){
                     $data = [
-                        'title' => $link->textContent,
-                        'url' => $href,
+                        'title' => $this->prepareVar($link->textContent),
+                        'url' => $this->prepareVar($href),
                         'flag' => 1
                     ];
                 }
@@ -74,33 +75,36 @@ final class ParserController extends Controller
 
     public function parseProducts($categories)
     {
-       // $categories->url = 'https://av.ru//g/00004330';
-        var_dump($categories);
         $xpath = $this->getPage($categories->url);
-
         // выбираем блоки с товарами <div class="b-grid__item">...
         $nav = $xpath->query("//div[@class='b-grid__item']");
+        //если не находим товары - выбираем заново рандомную категорию и парсим её
 
-        //если не находит товары - выбираем заново рандомную категорию и парсим её
-        if ($nav->length == 0){
-            $category = \Models\Category::getRandomCategory();
-            self::parseProducts($category);
-            exit();
-        }
-
-        /** @var \DOMElement $item */
-        foreach ($nav as $item){
-            if($this->count < $this->config['countPars']){
-                $link = $xpath->query(".//div/a[@class='b-product__title js-list-prod-open']", $item)->item(0);
-
-                $this->count++;
-                var_dump($link);
+        if ($nav->length !== 0){
+            /** @var \DOMElement $item */
+            foreach ($nav as $item){
+                if($this->count < $this->config['countPars']){
+                    $link = $xpath->query(".//div/a[@class='b-product__title js-list-prod-open']", $item)->item(0);
+                    $price = $xpath->query(".//div[contains(@class, 'b-price')]", $item)->item(0)->getAttribute('content');
+                    $img = $xpath->query(".//img[contains(@class, 'b-product__photo')]", $item)->item(0)->getAttribute('src');
+                    $data = [
+                        'category_id' => $categories->category_id,
+                        'title' => $this->prepareVar($link->textContent),
+                        'url' => $this->url . $link->getAttribute('href'),
+                        'price' => $this->prepareVar($price),
+                        'img' => $this->prepareVar($img)
+                    ];
+                    $product = new Product();
+                    $product->prepareAttributes($data);
+                    $product->save();
+                    $this->count++;
+                }
             }
-
+            $message = 'Товары спарсены по категории: ' . $categories->title;
+        }else{
+            $message = 'Нет товаров по категории: ' . $categories->title;
         }
-
-      //  var_dump($nav);
+        return $message;
     }
-
 
 }

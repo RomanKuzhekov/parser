@@ -70,7 +70,6 @@ class Model
             $query = Db::getInstance()->db()->prepare('INSERT INTO ' . static::$table . '(' . implode(', ', $columns) . ') VALUES (:' . implode(', :', $columns).')');
             $query = $this->bindParams($query);
             $query->execute();
-
         }
 
     }

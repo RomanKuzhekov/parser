@@ -57,9 +57,20 @@ class Model
         }
     }
 
-    protected function update()
+    protected function update($id)
     {
+        $updateColumns = [];
+        foreach(array_keys($this->attributes) as $column) {
+            $updateColumns[] = "$column = :$column";
+        }
 
+        $columns = array_keys($this->attributes);
+
+        if(!empty($this->attributes)){
+            $query = Db::getInstance()->db()->prepare('Update ' . static::$table . ' SET (:' . implode(', ', $columns).')');
+            $query = $this->bindParams($query);
+            $query->execute();
+        }
     }
 
     protected function insert()

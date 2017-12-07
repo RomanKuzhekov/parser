@@ -1,5 +1,5 @@
-11
 <?php
+ini_set('error_reporting', E_ALL);
 /**
  * Created by PhpStorm.
  * User: Роман
@@ -7,4 +7,4 @@
  * Time: 16:17
  */
 
-echo $_SERVER[DOCUMENT_ROOT];
+echo $_SERVER['DOCUMENT_ROOT'];

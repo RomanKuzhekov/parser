@@ -16,7 +16,8 @@ return [
         'database' => 'parser',
         'charset' => 'UTF8'
     ],
-    'countPars' => 10
+    'countPars' => 10,
+    'root_dir' => $_SERVER['DOCUMENT_ROOT'] . "/"
 ];
 
 

@@ -20,7 +20,7 @@ use services\Db;
  */
 final class Category extends Model
 {
-    protected static $table = 'categories';
+    public static $table = 'categories';
     protected static $fields = [
         'category_id',
         'title',
@@ -34,6 +34,9 @@ final class Category extends Model
        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' ORDER BY RAND() LIMIT 1')->fetchObject();
     }
 
-
+    public static function getAllCategory()
+    {
+        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' WHERE flag=1 ORDER BY category_id ')->fetchAll();
+    }
 
 }

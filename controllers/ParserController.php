@@ -9,6 +9,7 @@
 namespace controllers;
 use models\Category;
 use models\Product;
+use services\Db;
 
 
 /**
@@ -26,9 +27,8 @@ final class ParserController extends Controller
      */
     public function __construct()
     {
-        $this->config = require "config/config.php";
+        parent::__construct();
         $this->url = $this->config['url'];
-
 
         if(empty($this->url)){
             throw new \Exception("Адрес сайта пустой.");
@@ -61,7 +61,7 @@ final class ParserController extends Controller
                     $data = [
                         'title' => $this->prepareVar($link->textContent),
                         'url' => $this->prepareVar($href),
-                        'flag' => 1
+                        'flag' => 0
                     ];
                 }
 
@@ -94,15 +94,20 @@ final class ParserController extends Controller
                         'price' => $this->prepareVar($price),
                         'img' => $this->prepareVar($img)
                     ];
+
                     $product = new Product();
                     $product->prepareAttributes($data);
                     $product->save();
+                    Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $categories->category_id)->execute();
+//                    $category = new Category();
+//                    $category->prepareAttributes($data);
+//                    $category->update($categories->category_id);
                     $this->count++;
                 }
             }
-            $message = 'Товары спарсены по категории: ' . $categories->title;
+            $message = 'Количество товаров: ' . $this->count . 'шт.';
         }else{
-            $message = 'Нет товаров по категории: ' . $categories->title;
+            $message = 'Нет товаров по данной категории';
         }
         return $message;
     }

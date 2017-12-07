@@ -1,6 +1,6 @@
 <?php
 //phpinfo();
-ini_set('error_reporting', E_ALL);
+//ini_set('error_reporting', E_ALL);
 
 require "services/Autoloader.php";
 
@@ -8,8 +8,6 @@ $controller = new \controllers\Controller();
 //var_dump($controller->actionIndex());
 //var_dump($controller->actionProduct());
 $controller->run();
-
-
 
 ?>
 

@@ -34,10 +34,9 @@ final class Product extends Model
     ];
 
 
-    public static function getProductsByCategory($category){
-//         $category->category_id = 360;
+    public static function getProductsByCategory($category_id){
         $query = Db::getInstance()->db()->prepare('SELECT * FROM ' . static::$table . ' WHERE category_id = :category_id');
-        $query->bindValue(":category_id", $category->category_id);
+        $query->bindValue(":category_id", $category_id);
         $query->execute();
         return $query->fetchAll(Db::FETCH_CLASS, self::class);
     }

@@ -36,7 +36,7 @@ final class Category extends Model
 
     public static function getAllCategory()
     {
-        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' WHERE flag=1 ORDER BY category_id ')->fetchAll();
+        return Db::getInstance()->db()->query('SELECT * FROM ' . static::$table . ' WHERE flag=1 ORDER BY title ')->fetchAll();
     }
 
 }

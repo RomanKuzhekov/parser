@@ -24,9 +24,7 @@ class Controller implements IParser
     private $products;
     private $message;
     private $params;
-    private $patterns = [
-        "#[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui"
-    ];
+    private $patterns = ["#[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui"];
 
     public function __construct()
     {
@@ -60,9 +58,7 @@ class Controller implements IParser
         $this->prepareCategory();
         $this->products = Product::getProductsByCategory($this->params);
         echo $this->render("parser/category",
-            [
-                'products' => $this->products,
-            ]
+            ['products' => $this->products]
         );
     }
 
@@ -117,7 +113,6 @@ class Controller implements IParser
             $this->products = Product::getProductsByCategory($this->category->category_id);
         }
     }
-
 
     public function redirect($url)
     {

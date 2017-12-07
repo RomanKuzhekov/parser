@@ -8,8 +8,6 @@
 
 namespace services;
 
-
-
 use traits\TSingleton;
 
 final class Db extends \PDO
@@ -22,7 +20,7 @@ final class Db extends \PDO
 
     public function __construct()
     {
-        $this->config = require "config/config.php";
+        $this->config = require "./config/config.php";
     }
 
     public function db(){
@@ -39,12 +37,10 @@ final class Db extends \PDO
 
             $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
         }
 
         return $this->conn;
     }
-
 
     private function prepareDsnString(){
         return sprintf("%s:host=%s;dbname=%s;charset=%s",

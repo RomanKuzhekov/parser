@@ -16,11 +16,8 @@ class Model
     protected static $fields = [];
     protected $primaryKey = 'id';
     protected $attributes = [];
-    private $load = false;
 
-    /**
-     * Model constructor.
-     */
+
     public function __construct()
     {
         if (empty(static::$table)) {
@@ -50,27 +47,7 @@ class Model
 
     public function save()
     {
-        if($this->load){
-            $this->update();
-        }else{
-            $this->insert();
-        }
-    }
-
-    protected function update($id)
-    {
-        $updateColumns = [];
-        foreach(array_keys($this->attributes) as $column) {
-            $updateColumns[] = "$column = :$column";
-        }
-
-        $columns = array_keys($this->attributes);
-
-        if(!empty($this->attributes)){
-            $query = Db::getInstance()->db()->prepare('Update ' . static::$table . ' SET (:' . implode(', ', $columns).')');
-            $query = $this->bindParams($query);
-            $query->execute();
-        }
+        $this->insert();
     }
 
     protected function insert()

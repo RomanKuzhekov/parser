@@ -35,7 +35,6 @@ final class ParserController extends Controller
         }
     }
 
-
     public function parseCategories()
     {
         $xpath = $this->getPage($this->url);

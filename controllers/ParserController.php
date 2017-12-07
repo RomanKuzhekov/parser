@@ -98,9 +98,6 @@ final class ParserController extends Controller
                     $product->prepareAttributes($data);
                     $product->save();
                     Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $categories->category_id)->execute();
-//                    $category = new Category();
-//                    $category->prepareAttributes($data);
-//                    $category->update($categories->category_id);
                     $this->count++;
                 }
             }

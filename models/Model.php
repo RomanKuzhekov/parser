@@ -16,6 +16,7 @@ class Model
     protected static $fields = [];
     protected $primaryKey = 'id';
     protected $attributes = [];
+    protected $isLoad = false;
 
 
     public function __construct()
@@ -27,6 +28,7 @@ class Model
         if(empty(static::$fields)) {
             throw new \Exception('Не определили поля таблицы в:' . get_class($this));
         }
+
     }
 
     public function prepareAttributes(array $data)
@@ -47,6 +49,10 @@ class Model
 
     public function save()
     {
+        if ($this->isLoad){
+            Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $this->attributes['category_id'])->execute();
+        }
+
         $this->insert();
     }
 
@@ -59,9 +65,9 @@ class Model
             $query = $this->bindParams($query);
             $query->execute();
         }
-
     }
 
+    protected function update(){
 
-
+    }
 }

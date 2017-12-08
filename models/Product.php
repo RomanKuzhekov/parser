@@ -31,6 +31,7 @@ final class Product extends Model
         'price',
         'img'
     ];
+    protected $isLoad = true;
 
     public static function getProductsByCategory($category_id){
         $query = Db::getInstance()->db()->prepare('SELECT * FROM ' . static::$table . ' WHERE category_id = :category_id');

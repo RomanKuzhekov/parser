@@ -8,7 +8,6 @@
 
 namespace controllers;
 
-
 use interfaces\IParser;
 use models\Category;
 use models\Product;

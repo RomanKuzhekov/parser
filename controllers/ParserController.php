@@ -9,7 +9,6 @@
 namespace controllers;
 use models\Category;
 use models\Product;
-use services\Db;
 
 
 /**
@@ -97,7 +96,6 @@ final class ParserController extends Controller
                     $product = new Product();
                     $product->prepareAttributes($data);
                     $product->save();
-                    Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $categories->category_id)->execute();
                     $this->count++;
                 }
             }

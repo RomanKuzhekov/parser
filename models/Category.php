@@ -21,7 +21,7 @@ use services\Db;
  */
 final class Category extends Model
 {
-    public static $table = 'categories';
+    protected static $table = 'categories';
     protected static $fields = [
         'category_id',
         'title',

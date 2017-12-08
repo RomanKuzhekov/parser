@@ -18,7 +18,7 @@ use models\Product;
 final class ParserController extends Controller
 {
     private $url;
-    public $config;
+    protected $config;
     private $count = 0;
 
     /**
@@ -66,12 +66,11 @@ final class ParserController extends Controller
                 $category = new Category();
                 $category->prepareAttributes($data);
                 $category->save();
-
             }
         }
     }
 
-    public function parseProducts($categories)
+    public function parseProducts($categories) : string
     {
         $xpath = $this->getPage($categories->url);
         // выбираем блоки с товарами <div class="b-grid__item">...
@@ -100,7 +99,7 @@ final class ParserController extends Controller
                 }
             }
             $message = 'Количество товаров: ' . $this->count . 'шт.';
-        }else{
+        } else {
             $message = 'Нет товаров по данной категории';
         }
         return $message;

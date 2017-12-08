@@ -67,7 +67,4 @@ class Model
         }
     }
 
-    protected function update(){
-
-    }
 }

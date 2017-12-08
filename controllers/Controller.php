@@ -14,7 +14,7 @@ use models\Product;
 
 class Controller implements IParser
 {
-    public $config;
+    protected $config;
     private $action;
     private $defaultAction = "Index";
     private $category;
@@ -127,9 +127,7 @@ class Controller implements IParser
     }
 
     public function prepareVar($var){
-        if($var == false || $var == '' || $var == ' '){
-            $var = 'Нет значения';
-        }
-        return trim(strip_tags($var));
+        $var = trim(strip_tags($var));
+        return empty($var) ? 'Нет значения' : $var;
     }
 }

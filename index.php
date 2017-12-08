@@ -1,6 +1,6 @@
 <?php
 require "services/Autoloader.php";
 
-$controller = new \controllers\Controller();
-$controller->run();
+$controller = (new \controllers\Controller())->run();
+
 

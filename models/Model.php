@@ -40,7 +40,8 @@ class Model
         }
     }
 
-    protected function bindParams(\PDOStatement $query){
+    protected function bindParams(\PDOStatement $query)
+    {
         foreach ($this->attributes as $key => $value){
             $query->bindValue(":$key", $value);
         }
@@ -50,10 +51,13 @@ class Model
     public function save()
     {
         if ($this->isLoad){
-            Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $this->attributes['category_id'])->execute();
+            $this->updateCategory();
         }
-
         $this->insert();
+    }
+
+    protected function updateCategory(){
+        Db::getInstance()->db()->query('Update ' . Category::$table . ' SET flag=1 WHERE category_id =' . $this->attributes['category_id'])->execute();
     }
 
     protected function insert()

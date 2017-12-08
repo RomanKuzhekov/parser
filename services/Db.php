@@ -42,7 +42,8 @@ final class Db extends \PDO
         return $this->conn;
     }
 
-    private function prepareDsnString(){
+    private function prepareDsnString()
+    {
         return sprintf("%s:host=%s;dbname=%s;charset=%s",
             $this->config['db']['driver'],
             $this->config['db']['host'],

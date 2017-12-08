@@ -12,5 +12,4 @@ namespace interfaces;
 interface IParser
 {
     public function getPage(string $url);
-    public function render($template, $params);
 }

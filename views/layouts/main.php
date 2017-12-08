@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Парсер с сайта av.ru</title>
-    <link rel="stylesheet" href="/views/layouts/styles.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" media="all"/>
 </head>
 <body>
 <div class="container">

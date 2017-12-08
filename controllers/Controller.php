@@ -91,7 +91,8 @@ class Controller implements IParser
         return ob_get_clean();
     }
 
-    private function prepareCategory(){
+    private function prepareCategory()
+    {
         //выбираем рандомную категорию из БД для парсинга
         $this->category = Category::getRandomCategory();
 
@@ -103,7 +104,8 @@ class Controller implements IParser
         $this->categories = Category::getAllCategory();
     }
 
-    private function prepareProduct(){
+    private function prepareProduct()
+    {
         $this->products = Product::getProductsByCategory($this->category->category_id);
 
         //если нет товаров в бд - парсим товары по новой категории и заносим их в $products
@@ -126,7 +128,8 @@ class Controller implements IParser
         return new \DOMXPath($dom);
     }
 
-    public function prepareVar($var){
+    public function prepareVar($var)
+    {
         $var = trim(strip_tags($var));
         return empty($var) ? 'Нет значения' : $var;
     }
